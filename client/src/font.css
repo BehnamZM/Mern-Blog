@@ -1,0 +1,41 @@
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Bold.ttf");
+  /* src: url("../node_modules/vazir-font/dist/Vazir-Bold.ttf") format("truetype"); */
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Black.ttf");
+  /* src: url("../node_modules/vazir-font/dist/Vazir-Black.ttf") format("truetype"); */
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Medium.ttf");
+  /* src: url("../node_modules/vazir-font/dist/Vazir-Medium.ttf")
+    format("truetype"); */
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Light.ttf");
+  /* src: url("../node_modules/vazir-font/dist/Vazir-Light.ttf") format("truetype"); */
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Thin.ttf");
+  font-weight: 100;
+  font-style: normal;
+}
