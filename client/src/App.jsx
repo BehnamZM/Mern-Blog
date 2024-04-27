@@ -1,5 +1,8 @@
+import Navbar from "./components/Navbar";
+import MainLayout from "./layouts/MainLayout";
+
 function App() {
-  return <h1 className="text-3xl font-bold">سلام دنیا</h1>;
+  return <MainLayout></MainLayout>;
 }
 
 export default App;

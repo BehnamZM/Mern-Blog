@@ -1,3 +1,5 @@
+import MainLayout from "../layouts/MainLayout";
+
 export default function Signin() {
-  return <div>Signin</div>;
+  return <MainLayout>ورود</MainLayout>;
 }
