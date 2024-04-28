@@ -1,9 +1,11 @@
 import UserModel from "../models/user.module.js";
 import bcryptjs from "bcryptjs";
-export const signup = async (req, res) => {
+import { errorHandler } from "../utils/error.js";
+
+export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    return res.status(400).json({ message: "all field are required" });
+    next(errorHandler(400, "all field are required"));
   }
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -13,7 +15,7 @@ export const signup = async (req, res) => {
     });
 
     if (isUserExist) {
-      return res.status(422).json("email or username are allready exist!");
+      next(errorHandler(422, "email or username are allready exist!"));
     }
     await UserModel.create({
       username,
@@ -22,6 +24,6 @@ export const signup = async (req, res) => {
     });
     return res.json("signup successfully");
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
