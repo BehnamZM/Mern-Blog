@@ -6,3 +6,7 @@
 body {
   font-family: Vazir, sans-serif;
 }
+.Toastify__toast-body {
+  font-family: "Vazir", sans-serif !important;
+  direction: rtl;
+}

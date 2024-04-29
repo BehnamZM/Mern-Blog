@@ -1,8 +1,39 @@
 import MainLayout from "../layouts/MainLayout";
 import loginImage from "../assets/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitFormHandler = async (e) => {
+    e.preventDefault();
+    if (!email.trim() || !username.trim() || !password.trim()) {
+      toast("تمام فیلدها الزامی هستند!");
+      return;
+    }
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+      console.log(res);
+      if (res.ok) {
+        toast("ثبت نام با موفقیت انجام شد");
+        navigate("/");
+      }
+    } catch (error) {
+      toast("مشکلی پیش اومده٬ دوباره تلاش کنید!");
+      console.log(error);
+    }
+  };
   return (
     <MainLayout>
       <div className="">
@@ -18,7 +49,13 @@ export default function Signup() {
                 >
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                 </svg>
-                <input type="text" className="grow" placeholder="نام کاربری" />
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="نام کاربری"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                />
               </label>
               <label className="input input-bordered flex items-center gap-2">
                 <svg
@@ -30,7 +67,13 @@ export default function Signup() {
                   <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                   <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                 </svg>
-                <input type="text" className="grow" placeholder="ایمیل" />
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="ایمیل"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
               </label>
               <label className="input input-bordered flex items-center gap-2">
                 <svg
@@ -45,13 +88,22 @@ export default function Signup() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <input type="password" className="grow" placeholder="رمزعبور" />
+                <input
+                  type="password"
+                  className="grow"
+                  placeholder="رمزعبور"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
               </label>
-              <button className="btn bg-blue-500 text-white hover:bg-blue-700">
+              <button
+                onClick={submitFormHandler}
+                className="btn bg-blue-500 text-white hover:bg-blue-700"
+              >
                 ثبت نام
               </button>
               <div className="flex items-center gap-2">
-                <p>قبلا اکانت ساختید؟</p>
+                <span>قبلا اکانت ساختید؟</span>
                 <Link to="/signin" className="text-blue-500">
                   ورود
                 </Link>
