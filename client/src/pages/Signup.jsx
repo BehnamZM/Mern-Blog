@@ -27,7 +27,7 @@ export default function Signup() {
       console.log(res);
       if (res.ok) {
         toast("ثبت نام با موفقیت انجام شد");
-        navigate("/");
+        navigate("/signin");
       }
     } catch (error) {
       toast("مشکلی پیش اومده٬ دوباره تلاش کنید!");
