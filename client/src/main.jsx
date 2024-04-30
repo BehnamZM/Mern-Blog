@@ -9,7 +9,8 @@ import Dashboard from "./pages/Dashboard.jsx";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import { store } from "./redux/store.js";
+import { store, persistor } from "./redux/store.js";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +32,10 @@ const router = createBrowserRouter([
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-    <ToastContainer />
-  </Provider>
+  <PersistGate persistor={persistor}>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </Provider>
+  </PersistGate>
 );
