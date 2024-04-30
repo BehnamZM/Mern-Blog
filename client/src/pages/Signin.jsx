@@ -3,11 +3,19 @@ import loginImage from "../assets/login.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import {
+  signinStart,
+  signinSuccess,
+  signinFailed,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Signin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
 
   const submitFormHandler = async (e) => {
     e.preventDefault();
@@ -16,6 +24,7 @@ export default function Signin() {
       return;
     }
     try {
+      dispatch(signinStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -26,12 +35,12 @@ export default function Signin() {
       const data = await res.json();
       console.log(data);
       if (res.ok) {
+        dispatch(signinSuccess(data));
         toast("ورود با موفقیت انجام شد");
         navigate("/");
       }
     } catch (error) {
-      toast("مشکلی پیش اومده٬ دوباره تلاش کنید!");
-      console.log(error);
+      toast(dispatch(signinFailed(error.message)));
     }
   };
   return (
@@ -80,6 +89,7 @@ export default function Signin() {
                 />
               </label>
               <button
+                disabled={loading}
                 onClick={submitFormHandler}
                 className="btn bg-blue-500 text-white hover:bg-blue-700"
               >
