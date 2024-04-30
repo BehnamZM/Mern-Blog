@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import { store, persistor } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+import PrivateRoute from "./pages/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(

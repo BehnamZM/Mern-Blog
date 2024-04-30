@@ -1,3 +1,5 @@
+import MainLayout from "../layouts/MainLayout";
+
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return <MainLayout>داشبورد</MainLayout>;
 }
