@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 export default function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
   const path = useLocation().pathname;
-  console.log(currentUser);
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
