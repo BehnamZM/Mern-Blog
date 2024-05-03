@@ -1,6 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { signoutSuccess } from "../redux/user/userSlice";
 export default function Navbar() {
+  const dispatch = useDispatch();
+
+  const signoutHandler = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      if (res.ok) {
+        dispatch(signoutSuccess());
+        toast("خروج با موفقیت انجام شد");
+        navigate("/");
+      }
+    } catch (error) {
+      toast(dispatch(updateFailed(error.message)));
+    }
+  };
   const { currentUser } = useSelector((state) => state.user);
   const path = useLocation().pathname;
   return (
@@ -36,7 +53,7 @@ export default function Navbar() {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-xl">
-          MernBlog
+          BZMBlog
         </Link>
       </div>
       <div className=" hidden lg:flex flex-1 justify-center">
@@ -88,13 +105,13 @@ export default function Navbar() {
               <li>
                 <a>تنظیمات</a>
               </li>
-              <li>
-                <a>خروج</a>
+              <li onClick={signoutHandler}>
+                <span>خروج</span>
               </li>
             </ul>
           </div>
         ) : (
-          <Link className="btn btn-primary btn-outline" to="signin">
+          <Link className="btn btn-primary btn-outline" to="/signin">
             ورود
           </Link>
         )}
