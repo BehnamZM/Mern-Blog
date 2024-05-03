@@ -99,7 +99,9 @@ export default function Navbar() {
               <li>
                 <Link to={"/dashboard?tab=profile"} className="justify-between">
                   پروفایل
-                  <span className="badge">New</span>
+                  <span className="badge">
+                    {currentUser.isAdmin ? "مدیر" : "کاربر"}
+                  </span>
                 </Link>
               </li>
               <li>

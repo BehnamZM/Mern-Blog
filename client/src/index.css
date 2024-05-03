@@ -10,3 +10,8 @@ body {
   font-family: "Vazir", sans-serif !important;
   direction: rtl;
 }
+
+.ql-editor {
+  font-size: 1.04rem;
+  font-family: Vazir, sans-serif;
+}

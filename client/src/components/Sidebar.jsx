@@ -2,7 +2,7 @@ import { FaHouseUser } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { MdOutlineNoAccounts } from "react-icons/md";
+import { MdOutlineNoAccounts, MdOutlinePostAdd } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -58,15 +58,17 @@ export default function Sidebar() {
               <FaHouseUser className="w-7 h-7 text-blue-950" />
             </Link>
           </li>
-          <li>
-            <Link
-              to={"/dashboard?tab=profile"}
-              className="tooltip tooltip-top md:tooltip-left"
-              data-tip="تنظیمات"
-            >
-              <IoSettings className="w-7 h-7 text-blue-950" />
-            </Link>
-          </li>
+          {currentUser.isAdmin && (
+            <li>
+              <Link
+                to={"/create-post"}
+                className="tooltip tooltip-top md:tooltip-left"
+                data-tip="ایجاد پست"
+              >
+                <MdOutlinePostAdd className="w-7 h-7 text-blue-950" />
+              </Link>
+            </li>
+          )}
           <li onClick={() => document.getElementById("my_modal_2").showModal()}>
             <Link
               to={"/dashboard?tab=profile"}

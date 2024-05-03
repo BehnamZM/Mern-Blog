@@ -6,6 +6,7 @@ import {
   updateFailed,
 } from "../redux/user/userSlice";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -38,6 +39,10 @@ export default function Profile() {
     } catch (error) {
       toast(dispatch(updateFailed(error.message)));
     }
+  };
+
+  const addPostHandler = () => {
+    // codes
   };
   // const [imageFile, setImageFile] = useState(null);
   // const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -143,6 +148,16 @@ export default function Profile() {
         >
           بروزرسانی
         </button>
+        {currentUser.isAdmin && (
+          <Link to="/create-post">
+            <button
+              onClick={addPostHandler}
+              className="btn bg-fuchsia-600 text-white hover:bg-fuchsia-700 w-full"
+            >
+              ایجاد پست
+            </button>
+          </Link>
+        )}
       </form>
     </div>
   );
