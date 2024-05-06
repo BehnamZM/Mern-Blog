@@ -23,6 +23,6 @@ const upload = multer({ storage: storage });
 
 router.post("/upload", upload.single("image"), verifyUser, uploadImage);
 router.post("/create", verifyUser, create);
-router.get("/get-all", allPosts);
+router.get("/getposts", allPosts);
 
 export default router;

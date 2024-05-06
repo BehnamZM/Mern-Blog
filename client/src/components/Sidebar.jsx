@@ -3,6 +3,7 @@ import { IoSettings } from "react-icons/io5";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineNoAccounts, MdOutlinePostAdd } from "react-icons/md";
+import { TbLogs } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -59,15 +60,26 @@ export default function Sidebar() {
             </Link>
           </li>
           {currentUser.isAdmin && (
-            <li>
-              <Link
-                to={"/create-post"}
-                className="tooltip tooltip-top md:tooltip-left"
-                data-tip="ایجاد پست"
-              >
-                <MdOutlinePostAdd className="w-7 h-7 text-blue-950" />
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link
+                  to={"/create-post"}
+                  className="tooltip tooltip-top md:tooltip-left"
+                  data-tip="ایجاد پست"
+                >
+                  <MdOutlinePostAdd className="w-7 h-7 text-blue-950" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard?tab=posts"}
+                  className="tooltip tooltip-top md:tooltip-left"
+                  data-tip="همه پستها"
+                >
+                  <TbLogs className="w-7 h-7 text-blue-950" />
+                </Link>
+              </li>
+            </>
           )}
           <li onClick={() => document.getElementById("my_modal_2").showModal()}>
             <Link

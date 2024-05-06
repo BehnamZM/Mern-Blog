@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Profile from "../components/Profile";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
+import AllPosts from "./AllPosts";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -17,6 +18,7 @@ export default function Dashboard() {
   return (
     <DashboardLayout>
       {tab === "profile" && <Profile />}
+      {tab === "posts" && <AllPosts />}
       {tab === "test" && <div>تستی</div>}
     </DashboardLayout>
   );

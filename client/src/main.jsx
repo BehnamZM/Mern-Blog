@@ -14,6 +14,7 @@ import OnlyAdminPrivateRoute from "./pages/OnlyAdminPrivateRoute.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
+import AllPosts from "./pages/AllPosts.jsx";
 
 const router = createBrowserRouter([
   {
