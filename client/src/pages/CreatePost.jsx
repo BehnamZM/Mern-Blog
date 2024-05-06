@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -23,18 +24,19 @@ export default function CreatePost() {
         },
       });
       setImageUrl(res.data.data);
-      toast("آپلود تصویر با موفقیت انجام شد:)");
+      toast.success("آپلود تصویر با موفقیت انجام شد:)");
     } catch (error) {
-      toast(error);
+      toast.error(error);
     }
   };
+
   const uploadPost = async (e) => {
     e.preventDefault();
     if (!imageUrl) {
-      return toast("برای پست جدیدتون عکس انتخاب نکردید:(");
+      return toast.error("برای پست جدیدتون عکس انتخاب نکردید:(");
     }
     if (!title || !category || !content) {
-      return toast("پر کردن تمام فیلدها الزامی هست!");
+      return toast.error("پر کردن تمام فیلدها الزامی هست!");
     }
     try {
       const res = await axios.post(
@@ -46,8 +48,11 @@ export default function CreatePost() {
           },
         }
       );
-      toast("پست با موفقیت ایجاد شد:)");
-      navigate("/");
+
+      if (res.status === 201) {
+        toast.success("پست با موفقیت ایجاد شد:)");
+        navigate(`/post/${res.data.slug}`);
+      }
     } catch (error) {
       toast(error.message);
     }
@@ -105,14 +110,18 @@ export default function CreatePost() {
             />
           )}
 
-          {/* <ReactQuill theme="snow" className="w-full h-72"/> */}
-          <input
+          <ReactQuill
+            theme="snow"
+            className="w-full h-72"
+            onChange={(value) => setContent(value)}
+          />
+          {/* <input
             type="text"
             placeholder="متن مقاله را بنویسید"
             className="input input-ghost w-full bg-white"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-          />
+          /> */}
           <button
             type="submit"
             className="btn btn-success mt-20 md:mt-10 w-full"
