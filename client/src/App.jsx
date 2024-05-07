@@ -5,9 +5,9 @@ function App() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const getAllPosts = async () => {
-      const res = await fetch("/api/post/getposts");
+      const res = await fetch(`/api/post/getposts`);
       const data = await res.json();
-      setPosts(data);
+      setPosts(data.posts);
     };
     getAllPosts();
   }, []);
