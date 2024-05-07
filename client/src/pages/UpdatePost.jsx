@@ -1,18 +1,32 @@
 import DashboardLayout from "../layouts/DashboardLayout";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function CreatePost() {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+export default function UpdatePost() {
+  let post = {};
+  const { postId } = useParams();
+
+  useEffect(() => {
+    const getPost = async () => {
+      const { data } = await axios.get(`/api/post/getposts?postId=${postId}`);
+      post = data.posts[0];
+      console.log(post);
+    };
+    getPost();
+  }, [postId]);
+  const { currentUser } = useSelector((state) => state.user);
+  // const [post, setPost] = useState({});
   const navigate = useNavigate();
+  const [title, setTitle] = useState(post.title);
+  const [category, setCategory] = useState(post.category);
+  const [content, setContent] = useState(post.content);
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(post.image);
 
   const uploadImage = async () => {
     let formData = new FormData();
@@ -30,8 +44,9 @@ export default function CreatePost() {
     }
   };
 
-  const uploadPost = async (e) => {
+  const updatePostHandler = async (e) => {
     e.preventDefault();
+    console.log({ image: imageUrl, content, title, category });
     if (!imageUrl) {
       return toast.error("برای پست جدیدتون عکس انتخاب نکردید:(");
     }
@@ -39,8 +54,8 @@ export default function CreatePost() {
       return toast.error("پر کردن تمام فیلدها الزامی هست!");
     }
     try {
-      const res = await axios.post(
-        "/api/post/create",
+      const res = await axios.put(
+        `/api/post/updatepost/${post._id}/${currentUser._id}`,
         { image: imageUrl, content, title, category },
         {
           headers: {
@@ -50,7 +65,7 @@ export default function CreatePost() {
       );
 
       if (res.status === 201) {
-        toast.success("پست با موفقیت ایجاد شد:)");
+        toast.success("پست با موفقیت آپدیت شد:)");
         // navigate(`/post/${res.data.slug}`);
       }
     } catch (error) {
@@ -104,7 +119,6 @@ export default function CreatePost() {
                 width: "100%",
                 height: "400px",
               }}
-              // src={img}
               src={`./src/uploads/${imageUrl}`}
               alt=""
             />
@@ -114,18 +128,13 @@ export default function CreatePost() {
             theme="snow"
             className="w-full h-72"
             onChange={(value) => setContent(value)}
-          />
-          {/* <input
-            type="text"
-            placeholder="متن مقاله را بنویسید"
-            className="input input-ghost w-full bg-white"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-          /> */}
+          />
+
           <button
             type="submit"
             className="btn btn-success mt-20 md:mt-10 w-full"
-            onClick={uploadPost}
+            onClick={updatePostHandler}
           >
             ایجاد پست
           </button>

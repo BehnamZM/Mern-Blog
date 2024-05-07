@@ -15,6 +15,7 @@ import CreatePost from "./pages/CreatePost.jsx";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import AllPosts from "./pages/AllPosts.jsx";
+import UpdatePost from "./pages/UpdatePost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
     element: (
       <OnlyAdminPrivateRoute>
         <CreatePost />
+      </OnlyAdminPrivateRoute>
+    ),
+  },
+  {
+    path: "/update-post/:postId",
+    element: (
+      <OnlyAdminPrivateRoute>
+        <UpdatePost />
       </OnlyAdminPrivateRoute>
     ),
   },
