@@ -89,7 +89,7 @@ export default function Signin() {
                 />
               </label>
               <button
-                disabled={loading}
+                // disabled={loading}
                 onClick={submitFormHandler}
                 className="btn bg-blue-500 text-white hover:bg-blue-700"
               >

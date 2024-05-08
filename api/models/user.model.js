@@ -16,6 +16,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      default: "1715164306001person6.jpg",
+    },
     isAdmin: {
       type: Boolean,
       default: false,

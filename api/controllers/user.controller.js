@@ -42,6 +42,7 @@ export const updateUser = async (req, res, next) => {
             email: req.body.email,
             // profilePicture: req.body.profilePicture,
             password: req.body.password,
+            image: req.body.image,
           },
         },
         { new: true }
@@ -76,4 +77,9 @@ export const signout = (req, res) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const uploadImage = async (req, res) => {
+  const imageName = req.file.filename;
+  res.json({ status: "ok", data: imageName });
 };

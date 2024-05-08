@@ -6,7 +6,8 @@ import {
   updateFailed,
 } from "../redux/user/userSlice";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -14,6 +15,11 @@ export default function Profile() {
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
   const [password, setPassword] = useState(currentUser.password);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageFileUrl, setImageFileUrl] = useState(null);
+  const filePickerRef = useRef();
+  const navigate = useNavigate();
+
   const submitFormHandler = async (e) => {
     e.preventDefault();
     if (!email || !username) {
@@ -27,46 +33,60 @@ export default function Profile() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          image: imageFileUrl,
+        }),
       });
       console.log(res);
       const data = await res.json();
       if (res.ok) {
         dispatch(updateSuccess(data));
-        toast("بروزرسانی با موفقیت انجام شد");
-        navigate("/dashboard");
+        toast.success("بروزرسانی با موفقیت انجام شد");
+        navigate(0);
       }
     } catch (error) {
-      toast(dispatch(updateFailed(error.message)));
+      toast.error(dispatch(updateFailed(error.message)));
     }
   };
 
-  const addPostHandler = () => {
-    // codes
+  const uploadImage = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("image", imageFile);
+    try {
+      const res = await axios.post("/api/user/upload", formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      });
+      setImageFileUrl(res.data.data);
+      toast.success("آپلود تصویر با موفقیت انجام شد:)");
+    } catch (error) {
+      toast.error(error);
+    }
   };
-  // const [imageFile, setImageFile] = useState(null);
-  // const [imageFileUrl, setImageFileUrl] = useState(null);
-  // const filePickerRef = useRef();
-  // const handleChangeImage = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setImageFile(file);
-  //     setImageFileUrl(URL.createObjectURL(file));
-  //   }
-  // };
-  // const uploadImage = () => {
-  //   console.log("clicked");
-  // };
-  // useEffect(() => {
-  //   if (imageFile) {
-  //     uploadImage();
-  //   }
-  // }, [imageFile]);
+
+  const handleChangeImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImageFileUrl(URL.createObjectURL(file));
+    }
+  };
+
+  useEffect(() => {
+    if (imageFileUrl) {
+    }
+    console.log(imageFileUrl);
+  }, [imageFileUrl]);
 
   return (
     <div className="flex items-center justify-center h-full">
       <form className="w-full md:w-2/3 flex flex-col gap-3">
-        {/* <input
+        <input
           type="file"
           accept="image/*"
           onChange={handleChangeImage}
@@ -80,12 +100,16 @@ export default function Profile() {
           <img
             className="w-full h-full rounded-full border-[6px] border-blue-200 object-cover"
             src={
-              imageFileUrl ||
-              "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              imageFileUrl
+                ? imageFileUrl
+                : `./src/uploads/users/${currentUser.image}`
             }
             alt="avatar"
           />
-        </div> */}
+        </div>
+        <button className="btn btn-outline btn-sm " onClick={uploadImage}>
+          آپلودتصویر
+        </button>
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -150,10 +174,7 @@ export default function Profile() {
         </button>
         {currentUser.isAdmin && (
           <Link to="/create-post">
-            <button
-              onClick={addPostHandler}
-              className="btn bg-fuchsia-600 text-white hover:bg-fuchsia-700 w-full"
-            >
+            <button className="btn bg-fuchsia-600 text-white hover:bg-fuchsia-700 w-full">
               ایجاد پست
             </button>
           </Link>
