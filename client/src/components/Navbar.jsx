@@ -96,6 +96,13 @@ export default function Navbar() {
               <span className="text-center mb-3">
                 خوش اومدی {currentUser.username} عزیز :)
               </span>
+              {currentUser.isAdmin && (
+                <li>
+                  <Link to={"/dashboard?tab=admin"} className="justify-between">
+                    داشبورد
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link to={"/dashboard?tab=profile"} className="justify-between">
                   پروفایل
