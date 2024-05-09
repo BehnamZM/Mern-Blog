@@ -57,7 +57,7 @@ export default function Sidebar() {
               className="tooltip tooltip-top md:tooltip-left"
               data-tip="داشبورد"
             >
-              <FaHouseUser className="w-7 h-7 text-blue-950" />
+              <FaHouseUser className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
             </Link>
           </li>
           <li>
@@ -66,7 +66,7 @@ export default function Sidebar() {
               className="tooltip tooltip-top md:tooltip-left"
               data-tip="داشبورد"
             >
-              <ImProfile className="w-7 h-7 text-blue-950" />
+              <ImProfile className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
             </Link>
           </li>
           {currentUser.isAdmin && (
@@ -77,7 +77,7 @@ export default function Sidebar() {
                   className="tooltip tooltip-top md:tooltip-left"
                   data-tip="ایجاد پست"
                 >
-                  <MdOutlinePostAdd className="w-7 h-7 text-blue-950" />
+                  <MdOutlinePostAdd className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
                 </Link>
               </li>
               <li>
@@ -86,7 +86,7 @@ export default function Sidebar() {
                   className="tooltip tooltip-top md:tooltip-left"
                   data-tip="همه پستها"
                 >
-                  <TbLogs className="w-7 h-7 text-blue-950" />
+                  <TbLogs className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
                 </Link>
               </li>
             </>
@@ -97,7 +97,7 @@ export default function Sidebar() {
               className="tooltip tooltip-top md:tooltip-left"
               data-tip="خروج"
             >
-              <RiLogoutCircleRFill className="w-7 h-7 text-blue-950" />
+              <RiLogoutCircleRFill className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
             </Link>
           </li>
           <li onClick={() => document.getElementById("my_modal_1").showModal()}>
@@ -105,7 +105,7 @@ export default function Sidebar() {
               className="tooltip tooltip-top md:tooltip-left"
               data-tip="حذف حساب کاربری"
             >
-              <MdOutlineNoAccounts className="w-7 h-7 text-blue-950" />
+              <MdOutlineNoAccounts className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
             </div>
           </li>
         </ul>

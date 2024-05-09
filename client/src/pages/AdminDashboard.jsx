@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 export default function AdminDashboard() {
   const [usersInfos, setUsersInfos] = useState({});
   const [postsInfos, setPostsInfos] = useState({});
@@ -26,46 +28,116 @@ export default function AdminDashboard() {
 
   return (
     <div className="mt-8">
-      <div className="grid w-full md:w-2/3 mx-auto grid-cols-2 gap-3">
-        <div className=" h-24 bg-slate-300 rounded-sm flex justify-center p-4">
-          <div className="flex justify-center gap-1">
+      <div className="grid w-full lg:w-2/3 mx-auto grid-cols-1 md:grid-cols-2 gap-3">
+        <div className=" h-24 bg-slate-300 rounded-sm flex flex-col justify-center gap-2 p-4 text-lg font-semibold">
+          <div className="flex  justify-center gap-1">
             <span>تعداد کاربران:</span>
-            {/* <span>{usersInfos.totalUsers}</span> */}
+            <span className="text-green-500">{usersInfos.totalUsers}</span>
+          </div>
+          <div className="flex justify-center gap-1 text-[10px]">
+            <span>ثبت نام در ماه گذشته:</span>
+            <span>{usersInfos.lastMonthUsers}</span>
           </div>
         </div>
-        <div className=" h-24 bg-slate-300 rounded-sm"></div>
+        <div className=" h-24 bg-slate-300 rounded-sm flex flex-col justify-center gap-2 p-4 text-lg font-semibold">
+          <div className="flex  justify-center gap-1">
+            <span>تعداد پستها:</span>
+            <span className="text-green-500">{postsInfos.totalPosts}</span>
+          </div>
+          <div className="flex justify-center gap-1 text-[10px]">
+            <span>تعداد پست ها در ماه گذشته</span>
+            <span>{postsInfos.lastMonthPosts}</span>
+          </div>
+        </div>
       </div>
-      <div className="grid w-full md:w-2/3 mx-auto grid-cols-2 gap-3 my-3">
-        <div className="h-24 bg-slate-300 rounded-sm flex justify-center p-4">
-          {/* <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th></th>
-                <th>تصویر</th>
-                <th>نام</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersInfos?.users.map((user, index) => (
-                <>
-                  <tr key={user._id}>
-                    <th>{index + 1}</th>
-                    <td>
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src={`./src/uploads/users/${user.image}`}
-                          alt="user"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div>{user.username}</div>
-                    </td>
+      <div className="grid w-full lg:w-2/3 mx-auto grid-cols-1 md:grid-cols-2 gap-3 my-3">
+        <div className=" bg-slate-300 rounded-sm flex justify-center p-4">
+          {usersInfos.users ? (
+            <div className="w-full flex flex-col justify-between">
+              <table className="table table-zebra">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>تصویر</th>
+                    <th>نام</th>
                   </tr>
-                </>
-              ))}
-            </tbody>
-          </table> */}
+                </thead>
+                <tbody>
+                  {usersInfos?.users.slice(0, 5).map((user, index) => (
+                    <>
+                      <tr key={user._id}>
+                        <th>{index + 1}</th>
+                        <td>
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={`./src/uploads/users/${user.image}`}
+                              alt="user"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div>{user.username}</div>
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+                </tbody>
+              </table>
+              <Link
+                to={"/dashboard?tab=users"}
+                className="flex items-center justify-center gap-2 text-blue-500 font-thin"
+              >
+                <span>مشاهده همه کاربران</span>
+                <FaLongArrowAltLeft />
+              </Link>
+            </div>
+          ) : (
+            <Loading />
+          )}
+        </div>
+        <div className=" bg-slate-300 rounded-sm flex justify-center p-4">
+          {postsInfos.posts ? (
+            <div className="w-full flex flex-col justify-between">
+              <table className="table table-zebra">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>تصویر</th>
+                    <th>نام</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {postsInfos?.posts.slice(0, 5).map((post, index) => (
+                    <>
+                      <tr key={post._id}>
+                        <th>{index + 1}</th>
+                        <td>
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={`./src/uploads/${post.image}`}
+                              alt="post"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+                </tbody>
+              </table>
+              <Link
+                to={"/dashboard?tab=posts"}
+                className="flex items-center justify-center gap-2 text-blue-500 font-thin"
+              >
+                <span>مشاهده همه پستها</span>
+                <FaLongArrowAltLeft />
+              </Link>
+            </div>
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import AllPosts from "./pages/AllPosts.jsx";
 import UpdatePost from "./pages/UpdatePost.jsx";
+import PostPage from "./pages/PostPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/post/:postSlug",
+    element: <PostPage />,
   },
   {
     path: "/dashboard",

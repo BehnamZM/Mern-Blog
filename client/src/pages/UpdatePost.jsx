@@ -6,27 +6,28 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loading from "../components/Loading";
 
 export default function UpdatePost() {
-  let post = {};
+  const [post, setPost] = useState({});
   const { postId } = useParams();
 
   useEffect(() => {
     const getPost = async () => {
       const { data } = await axios.get(`/api/post/getposts?postId=${postId}`);
-      post = data.posts[0];
+      setPost(data.posts[0]);
       console.log(post);
     };
     getPost();
   }, [postId]);
+
   const { currentUser } = useSelector((state) => state.user);
-  // const [post, setPost] = useState({});
-  const navigate = useNavigate();
   const [title, setTitle] = useState(post.title);
   const [category, setCategory] = useState(post.category);
   const [content, setContent] = useState(post.content);
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(post.image);
+  const navigate = useNavigate();
 
   const uploadImage = async () => {
     let formData = new FormData();
@@ -76,69 +77,75 @@ export default function UpdatePost() {
   return (
     <DashboardLayout>
       <div className="w-full my-5 flex flex-col items-center justify-center ">
-        <h1 className="font-extrabold text-2xl text-blue-400">
-          افزودن پست جدید
-        </h1>
-        <form className="p-3 my-2 rounded-lg bg-blue-100 w-full lg:w-2/3  mx-auto flex flex-col items-center justify-center gap-2">
-          <input
-            type="text"
-            placeholder="تیتر مقاله را بنویسید"
-            className="input input-ghost w-full bg-white"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <select
-            className="select select-bordered w-full"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option disabled value="">
-              دسته بندی مقاله
-            </option>
-            <option value="ریکت">ریکت</option>
-            <option value="تیلویند">تیلویند</option>
-          </select>
-          <div className="flex justify-center md:justify-between flex-wrap gap-2  w-full p-3 border-4 border-dotted border-white">
-            <input
-              onChange={(e) => setImage(e.target.files[0])}
-              type="file"
-              className="file-input file-input-bordered  w-full bg-white max-w-xs"
-            />
-            <button
-              className="btn bg-blue-400"
-              type="button"
-              onClick={uploadImage}
-            >
-              انتخات تصویر
-            </button>
-          </div>
-          {imageUrl && (
-            <img
-              style={{
-                objectFit: "cover",
-                width: "100%",
-                height: "400px",
-              }}
-              src={`./src/uploads/${imageUrl}`}
-              alt=""
-            />
-          )}
+        {post ? (
+          <>
+            <h1 className="font-extrabold text-2xl text-blue-400">
+              بروزرسانی پست
+            </h1>
+            <form className="p-3 my-2 rounded-lg bg-blue-100 w-full lg:w-2/3  mx-auto flex flex-col items-center justify-center gap-2">
+              <input
+                type="text"
+                placeholder="تیتر مقاله را بنویسید"
+                className="input input-ghost w-full bg-white"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <select
+                className="select select-bordered w-full"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option disabled value="">
+                  دسته بندی مقاله
+                </option>
+                <option value="ریکت">ریکت</option>
+                <option value="تیلویند">تیلویند</option>
+              </select>
+              <div className="flex justify-center md:justify-between flex-wrap gap-2  w-full p-3 border-4 border-dotted border-white">
+                <input
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                  className="file-input file-input-bordered  w-full bg-white max-w-xs"
+                />
+                <button
+                  className="btn bg-blue-400"
+                  type="button"
+                  onClick={uploadImage}
+                >
+                  انتخات تصویر
+                </button>
+              </div>
+              {imageUrl && (
+                <img
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "400px",
+                  }}
+                  src={`./src/uploads/${imageUrl}`}
+                  alt=""
+                />
+              )}
 
-          <ReactQuill
-            theme="snow"
-            className="w-full h-72"
-            onChange={(value) => setContent(value)}
-            value={content}
-          />
+              <ReactQuill
+                theme="snow"
+                className="w-full h-72"
+                onChange={(value) => setContent(value)}
+                value={content}
+              />
 
-          <button
-            type="submit"
-            className="btn btn-success mt-20 md:mt-10 w-full"
-            onClick={updatePostHandler}
-          >
-            ایجاد پست
-          </button>
-        </form>
+              <button
+                type="submit"
+                className="btn btn-success mt-20 md:mt-10 w-full"
+                onClick={updatePostHandler}
+              >
+                ایجاد پست
+              </button>
+            </form>
+          </>
+        ) : (
+          <Loading />
+        )}
       </div>
     </DashboardLayout>
   );

@@ -6,6 +6,16 @@
 body {
   font-family: Vazir, sans-serif;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: Vazir !important;
+}
 .Toastify__toast-body {
   font-family: "Vazir", sans-serif !important;
   direction: rtl;
@@ -14,4 +24,35 @@ body {
 .ql-editor {
   font-size: 1.04rem;
   font-family: Vazir, sans-serif;
+}
+
+.post-content {
+  font-family: Vazir, sans-serif;
+}
+
+.post-content p {
+  margin-bottom: 0.5rem;
+}
+
+.post-content h1 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 1.5rem 0;
+}
+
+.post-content h2 {
+  font-size: 1.4rem;
+  margin: 1.5rem 0;
+}
+
+.post-content a {
+  color: rgb(73, 149, 199);
+  text-decoration: none;
+}
+/* .post-content img {
+  max-height: 600px;
+} */
+
+.post-content a:hover {
+  text-decoration: underline;
 }

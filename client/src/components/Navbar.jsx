@@ -85,7 +85,7 @@ export default function Navbar() {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src={`./src/uploads/users/${currentUser.image}`}
+                  src={`/src/uploads/users/${currentUser.image}`}
                 />
               </div>
             </div>
