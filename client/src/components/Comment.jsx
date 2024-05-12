@@ -1,10 +1,12 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns-jalali";
+import { GrLike } from "react-icons/gr";
+import { useSelector } from "react-redux";
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, onLike }) {
   const [user, setUser] = useState({});
-  console.log(user);
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -39,6 +41,19 @@ export default function Comment({ comment }) {
           </span>
         </div>
         <p className="text-gray-500 pb-2">{comment.content}</p>
+        <div
+          className={`flex gap-2 mt-3 ${
+            currentUser && comment.likes.includes(currentUser._id)
+              ? "text-green-800"
+              : "text-gray-400"
+          }`}
+        >
+          <GrLike
+            className=" cursor-pointer"
+            onClick={() => onLike(comment._id)}
+          />
+          <span>{comment.numberOfLikes > 0 && comment.numberOfLikes}</span>
+        </div>
       </div>
     </div>
   );
