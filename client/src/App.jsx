@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PostCard from "./components/PostCard";
 import MainLayout from "./layouts/MainLayout";
 
 function App() {
@@ -15,15 +16,11 @@ function App() {
   return (
     <MainLayout>
       {posts.length ? (
-        posts.map((post) => (
-          <img
-            key={post._id}
-            width="200px"
-            height="200px"
-            src={`./src/uploads/${post.image}`}
-            alt=""
-          />
-        ))
+        <div className="w-full md:w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+          {posts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
       ) : (
         <div role="alert" className="alert alert-error text-white">
           <svg
