@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import PostCard from "./components/PostCard";
 import MainLayout from "./layouts/MainLayout";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -16,11 +18,20 @@ function App() {
   return (
     <MainLayout>
       {posts.length ? (
-        <div className="w-full md:w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
+        <>
+          <div className="w-full md:w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+            {posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+          <Link
+            to={"/search"}
+            className="flex items-center justify-center gap-2 text-blue-500 font-medium mb-6 mt-2"
+          >
+            <span>مشاهده همه پستها</span>
+            <FaLongArrowAltLeft />
+          </Link>
+        </>
       ) : (
         <div role="alert" className="alert alert-error text-white">
           <svg

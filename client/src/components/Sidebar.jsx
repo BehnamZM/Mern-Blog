@@ -2,7 +2,11 @@ import { FaHouseUser } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { MdOutlineNoAccounts, MdOutlinePostAdd } from "react-icons/md";
+import {
+  MdOutlineNoAccounts,
+  MdOutlinePostAdd,
+  MdInsertComment,
+} from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { TbLogs } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,20 +55,22 @@ export default function Sidebar() {
     <>
       <div className="flex items-center">
         <ul className="menu bg-base-200 rounded-box flex flex-row md:flex-col justify-center items-center w-full md:w-fit">
-          <li>
-            <Link
-              to={"/dashboard?tab=admin"}
-              className="tooltip tooltip-top md:tooltip-left"
-              data-tip="داشبورد"
-            >
-              <FaHouseUser className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
-            </Link>
-          </li>
+          {currentUser.isAdmin && (
+            <li>
+              <Link
+                to={"/dashboard?tab=admin"}
+                className="tooltip tooltip-top md:tooltip-left"
+                data-tip="داشبورد"
+              >
+                <FaHouseUser className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               to={"/dashboard?tab=profile"}
               className="tooltip tooltip-top md:tooltip-left"
-              data-tip="داشبورد"
+              data-tip="پروفایل"
             >
               <ImProfile className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
             </Link>
@@ -87,6 +93,15 @@ export default function Sidebar() {
                   data-tip="همه پستها"
                 >
                   <TbLogs className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard?tab=comments"}
+                  className="tooltip tooltip-top md:tooltip-left"
+                  data-tip="همه کامنتها"
+                >
+                  <MdInsertComment className="w-4 md:w-7 h-4 md:h-7 text-blue-950" />
                 </Link>
               </li>
             </>

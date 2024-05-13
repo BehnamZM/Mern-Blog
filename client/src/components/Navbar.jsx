@@ -1,8 +1,22 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signoutSuccess } from "../redux/user/userSlice";
+
 export default function Navbar() {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+  const path = useLocation().pathname;
+
+  const urlParams = new URLSearchParams(location.search);
+  useEffect(() => {
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
 
   const signoutHandler = async () => {
     try {
@@ -18,8 +32,13 @@ export default function Navbar() {
       toast(dispatch(updateFailed(error.message)));
     }
   };
-  const { currentUser } = useSelector((state) => state.user);
-  const path = useLocation().pathname;
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -68,13 +87,15 @@ export default function Navbar() {
       </div>
 
       <div className="flex-1 gap-2 justify-end">
-        <div className="form-control">
+        <form onSubmit={submitHandler} className="form-control">
           <input
             type="text"
             placeholder="Search"
             className="input input-bordered w-24 md:w-auto"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
+        </form>
         {currentUser ? (
           <div className="dropdown dropdown-end">
             <div

@@ -36,11 +36,11 @@ export default function Signin() {
       console.log(data);
       if (res.ok) {
         dispatch(signinSuccess(data));
-        toast("ورود با موفقیت انجام شد");
+        toast.success("ورود با موفقیت انجام شد");
         navigate("/");
       }
     } catch (error) {
-      toast(dispatch(signinFailed(error.message)));
+      toast.error(dispatch(signinFailed(error.message)));
     }
   };
   return (

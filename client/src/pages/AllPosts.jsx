@@ -7,6 +7,7 @@ export default function AllPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [posts, setPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
+  const [postToBeDelete, setPostToBeDelete] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,10 +40,13 @@ export default function AllPosts() {
     }
   };
 
-  const handleDeletePost = async (postId) => {
-    const res = await fetch(`/api/post/delete/${postId}/${currentUser._id}`, {
-      method: "DELETE",
-    });
+  const handleDeletePost = async (postToBeDelete) => {
+    const res = await fetch(
+      `/api/post/delete/${postToBeDelete}/${currentUser._id}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await res.json();
     if (res.ok) {
       setPosts((prevPosts) =>
@@ -98,9 +102,10 @@ export default function AllPosts() {
                     <td>
                       <button
                         className="btn btn-sm btn-error"
-                        onClick={() =>
-                          document.getElementById("my_modal_3").showModal()
-                        }
+                        onClick={() => {
+                          document.getElementById("my_modal_3").showModal();
+                          setPostToBeDelete(post._id);
+                        }}
                       >
                         حذف
                       </button>
@@ -112,7 +117,7 @@ export default function AllPosts() {
                       <div className="modal-action flex justify-center gap-6">
                         <button
                           className="btn btn-error text-white"
-                          onClick={() => handleDeletePost(post._id)}
+                          onClick={() => handleDeletePost(postToBeDelete)}
                         >
                           بله
                         </button>

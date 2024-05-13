@@ -5,6 +5,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import AllPosts from "./AllPosts";
 import AdminDashboard from "./AdminDashboard";
+import AllComments from "./AllComments";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -21,6 +22,7 @@ export default function Dashboard() {
       {tab === "admin" && <AdminDashboard />}
       {tab === "profile" && <Profile />}
       {tab === "posts" && <AllPosts />}
+      {tab === "comments" && <AllComments />}
       {tab === "test" && <div>تستی</div>}
     </DashboardLayout>
   );
